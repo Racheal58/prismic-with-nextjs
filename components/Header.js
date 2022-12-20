@@ -6,10 +6,12 @@ import { PrismicText, PrismicLink } from "@prismicio/react";
  */
 const MenuLink = ({ menuLink }) => {
   return (
-    <li>
-      <PrismicLink field={menuLink.link}>
+    <li className="px-10 py-6 text-black hover:bg-gray-500 hover:text-white border border-gray-500">
+      {/* <PrismicLink field={menuLink.link}> */}
+      <Link href={menuLink.link.url}>
         <PrismicText field={menuLink.link_label} />
-      </PrismicLink>
+      </Link>
+      {/* </PrismicLink> */}
     </li>
   );
 };
@@ -17,12 +19,12 @@ const MenuLink = ({ menuLink }) => {
 /**
  * Site header/nav component
  */
-export const Header = ({ menu }) => {
-  if (menu) {
+export const Header = ({ menuDoc }) => {
+  if (menuDoc) {
     return (
-      <nav>
-        <ul>
-          {menu.data.menu_links.map((menuLink, i) => (
+      <nav className="flex justify-center space-x-16 border-y border-gray-500 mt-16">
+        <ul className="flex justify-cente w-7/12">
+          {menuDoc.data.menu_links.map((menuLink, i) => (
             <MenuLink menuLink={menuLink} key={i} />
           ))}
         </ul>
@@ -31,13 +33,4 @@ export const Header = ({ menu }) => {
   }
 
   return null;
-};
-
-export const getStaticProps = async () => {
-  const client = createClient(sm.apiEndpoint);
-  const menu = await client.getSingle("menu");
-
-  return {
-    props: { menu },
-  };
 };

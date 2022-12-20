@@ -6,7 +6,7 @@ import { PrismicNextImage } from "@prismicio/next";
 
 import sm from "../sm.json";
 
-export default function Page({ page, menu }) {
+export default function Page({ page }) {
   return (
     <>
       {page.data.post.map((post_item, index) => (
@@ -33,10 +33,9 @@ export default function Page({ page, menu }) {
 export const getStaticProps = async ({ params }) => {
   const client = createClient(sm.apiEndpoint);
   const page = await client.getByUID("post", params.uid);
-  const menu = await client.getSingle("menu");
 
   return {
-    props: { page, menu },
+    props: { page },
   };
 };
 
